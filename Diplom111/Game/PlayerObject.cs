@@ -13,8 +13,17 @@ namespace Diplom111.Game
     class PlayerObject:GameObjects
     {
 
-        public PlayerObject(Size panel_size) :base(panel_size)
+        public PlayerObject(Size panel_size) : base(panel_size)
         {
+
+        }
+
+        public PlayerObject(Size panel_size, GameObjects npcobject) : base(panel_size) //берём у нпс все параметры
+        {
+            this.center = npcobject.GetCenter();
+            this.radius = npcobject.GetRadius();
+            this.color = npcobject.GetColor();
+            this.step = npcobject.GetStep();
 
         }
 

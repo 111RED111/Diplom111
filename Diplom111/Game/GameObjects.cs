@@ -35,6 +35,28 @@ namespace Diplom111.Game
             g.FillEllipse(new SolidBrush(Color.Red), center.X - radius, center.Y - radius, 2 * radius, 2 * radius);//рисуем объект            
         }
 
+        //Возвращает координаты объекта
+        public Point GetCenter()
+        {
+            return center;
+        }
+
+        public int GetRadius()
+        {
+            return radius;
+        }
+
+        public Color GetColor()
+        {
+            return color;
+        }
+
+        public int GetStep()
+        {
+            return step;
+        }
+
+
         //Сдвигаем объект
         public abstract void MoveObject(Point MousePosition, Size sizepanel);
         //{

@@ -71,7 +71,7 @@ namespace Diplom111
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(562, 34);
+            this.button3.Location = new System.Drawing.Point(557, 34);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(139, 61);
             this.button3.TabIndex = 3;
@@ -81,7 +81,7 @@ namespace Diplom111
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(373, 34);
+            this.button4.Location = new System.Drawing.Point(382, 34);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(139, 61);
             this.button4.TabIndex = 4;
@@ -96,6 +96,7 @@ namespace Diplom111
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1211, 599);
             this.panel1.TabIndex = 5;
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             // 
             // Form1

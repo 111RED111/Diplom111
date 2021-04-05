@@ -55,5 +55,11 @@ namespace Diplom111
         {
             Game.SetMousePosition(e.Location);
         }
+
+        //выбор игрока
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Game.CreatePlayer(MousePosition);
+        }
     }
 }
