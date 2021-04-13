@@ -205,7 +205,7 @@ namespace Diplom111.Game
             return false;
         }
 
-        private bool MoveUbeganie() // убегание СДЕЛАТЬ ПРАВИЛЬНО!!!!!!!!!!!!!!!
+        private bool MoveUbeganie() // убегание СДЕЛАТЬ ПРАВИЛЬНО!!!!!!!!!!!!!!! сделан только 0
         {
             if (WhoEat.Count > 0)
             {
