@@ -59,7 +59,7 @@ namespace Diplom111
         //выбор игрока
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            Game.CreatePlayer(MousePosition);
+            Game.CreatePlayer(e.Location);
         }
     }
 }

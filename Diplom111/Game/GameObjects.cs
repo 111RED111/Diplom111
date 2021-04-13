@@ -58,7 +58,7 @@ namespace Diplom111.Game
 
 
         //Сдвигаем объект
-        public abstract void MoveObject(Point MousePosition, Size sizepanel);
+        public abstract void MoveObject(Point MousePosition, Size sizepanel, LinkedList<GameObjects>List1);
         //{
         //    int step = 10;
         //    Point MousePosition1 = new Point(MousePosition.X - radius, MousePosition.Y - radius);

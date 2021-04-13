@@ -27,8 +27,9 @@ namespace Diplom111
                 //Console.WriteLine(sampleBuffer);
                 for (int i = 44; i < buffer.Length; i++) //в wav даееые с 44 байта
                 {
-                    //Console.WriteLine(buffer[i]);
+                    Console.WriteLine(buffer[i]);
                     Console.WriteLine(Convert.ToString(buffer[i], 2));
+                    //System.Diagnostics.Debug.WriteLine(Convert.ToString(buffer[i], 2));
                 }
             }
         }

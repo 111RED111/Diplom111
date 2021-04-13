@@ -28,7 +28,7 @@ namespace Diplom111.Game
         }
 
         //Сдвигаем объект
-        public override void MoveObject(Point MousePosition, Size sizepanel)
+        public override void MoveObject(Point MousePosition, Size sizepanel, LinkedList<GameObjects>List1)
         {
                     
             double dist = Math.Sqrt(Math.Pow(MousePosition.X - center.X, 2) + Math.Pow(MousePosition.Y - center.Y, 2)); //расчёт расстояния

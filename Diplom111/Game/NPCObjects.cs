@@ -13,8 +13,9 @@ namespace Diplom111.Game
         private double angle_rad; //направление движения
         private int Hstep; //число шагов в одном направлении
         private int radobz; //радиус обзора объекта 
-        private LinkedList<NPCObjects> WhoEat;//список, тех кто может съесть
-        private NPCObjects target;//самый приоритетный объект 
+
+        private LinkedList<GameObjects> WhoEat;//список, тех кто может съесть
+        private GameObjects target;//самый приоритетный объект 
 
         //конструктор, описывает, как создаётся нпс
         public NPCObjects(Size panel_size) : base(panel_size)//size_p - длина панели
@@ -23,9 +24,10 @@ namespace Diplom111.Game
         }
 
         //Сдвигаем объект
-        public override void MoveObject(Point MousePosition, Size sizepanel)
+        public override void MoveObject(Point MousePosition, Size sizepanel, LinkedList<GameObjects>List1)
         {
 
+            Vidno_ne(List1);
             KudaMove(sizepanel);
 
             //if (0 > center.Y && 0 > center.X)
@@ -56,26 +58,27 @@ namespace Diplom111.Game
             //g.FillPie(redBrush, rect, startAngle, sweepAngle); //рисуем сектор обзора
         }
 
-        public bool YouCanSeeMe(NPCObjects npc)//проверка видит конкретный нпс,  кого-то или нет
+        public bool YouCanSeeMe(GameObjects npc)//проверка видит конкретный нпс,  кого-то или нет
         {
-            double d = Math.Sqrt(Math.Pow(npc.center.X - center.X, 2) + Math.Pow(npc.center.Y - center.Y, 2)); ;//расчёт расстояние между окружностями(объект и обзор) 
-            if (d<=(npc.radius+radobz))//пересечение объекта и обзора
+            double d = Math.Sqrt(Math.Pow(npc.GetCenter().X - center.X, 2) + Math.Pow(npc.GetCenter().Y - center.Y, 2)); ;//расчёт расстояние между окружностями(объект и обзор) 
+            if (d<=(npc.GetRadius() + radobz))//пересечение объекта и обзора
             {
                 //double angle = Math.Atan2(npc.center.Y - center.Y, npc.center.X - center.X);//попадает ли объект в сектор
                 //angle = (angle * 180) / Math.PI;//перевод в градусы
                 //Console.WriteLine(angle);
+                System.Diagnostics.Debug.WriteLine("нпс видит");
                 return true;
             }
             return false;
         }
 
-        public void Vidno_ne(LinkedList<NPCObjects>List1)//проверка видно кого или нет
+        public void Vidno_ne(LinkedList<GameObjects>List1)//проверка видно кого или нет
         {
-            WhoEat = new LinkedList<NPCObjects>(); //новый список, от кого убегать
+            WhoEat = new LinkedList<GameObjects>(); //новый список, от кого убегать
             target = null;
             for (int i=0; i<List1.Count; i++)
             {
-                NPCObjects npc_obj = List1.ElementAt(i);//перебор всех нпс
+                GameObjects npc_obj = List1.ElementAt(i);//перебор всех нпс
                 if (npc_obj != this)//проверка какой это нпс(что-бы не проверять самого себя)
                 {
                     bool vidno = YouCanSeeMe(npc_obj);//нпс проверяет видит ли он другой объект   
@@ -95,7 +98,7 @@ namespace Diplom111.Game
                             }
                             else
                             {
-                                if (npc_obj.radius > target.radius)//поиск наилучшей цели  МОЖНО ОДИН ИФ
+                                if (npc_obj.GetRadius() > target.GetRadius())//поиск наилучшей цели  МОЖНО ОДИН ИФ
                                 {
                                     target = npc_obj;//выбирается новая цель
                                 }
@@ -107,12 +110,16 @@ namespace Diplom111.Game
             }
         }
 
-        private bool Ubegat(NPCObjects npc_obj)//проверка убегать объекту или нет
+        private bool Ubegat(GameObjects npc_obj)//проверка убегать объекту или нет
         {
-            double bolshe = npc_obj.radius / this.radius;//радиус объекта, который видно делится с текущим
-            if (bolshe > 1.15)//есть можно, если на 15% меньше
+            double bolshe = (double) npc_obj.GetRadius() / this.radius;//радиус объекта, который видно делится с текущим
+            //if (bolshe > 1.15)//есть можно, если на 15% меньше
+            System.Diagnostics.Debug.WriteLine("ubegat");
+            System.Diagnostics.Debug.WriteLine(Convert.ToString(bolshe));
+            if (bolshe > 1.01)//есть можно, если на 1% меньше
             {
-                return true;                
+                System.Diagnostics.Debug.WriteLine("давать по съёбам");
+                return true;
             }
             else
             {
@@ -120,11 +127,15 @@ namespace Diplom111.Game
             }
         }
 
-        private bool Estb(NPCObjects npc_obj)//проверка можно ли съесть или нет
+        private bool Estb(GameObjects npc_obj)//проверка можно ли съесть или нет
         {
-            double bolshe = this.radius / npc_obj.radius;//радиус текущего объекта, делится с который видно
-            if (bolshe > 1.15)//есть можно, если на 15% меньше
+            double bolshe = (double) this.radius / npc_obj.GetRadius();//радиус текущего объекта, делится с который видно
+            //if (bolshe > 1.15)//есть можно, если на 15% меньше
+            System.Diagnostics.Debug.WriteLine("Estb");
+            System.Diagnostics.Debug.WriteLine(Convert.ToString(bolshe));
+            if (bolshe > 1.01)//есть можно, если на 1% меньше
             {
+                System.Diagnostics.Debug.WriteLine("можно есть");
                 return true;
             }
             else
@@ -158,6 +169,7 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.PI;
                 Hstep = 1;
+                System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
 
@@ -165,6 +177,7 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.PI / 2;
                 Hstep = 1;
+                System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
 
@@ -178,6 +191,7 @@ namespace Diplom111.Game
             {
                 angle_rad = 0;
                 Hstep = 1;
+                System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
 
@@ -185,23 +199,33 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.PI * 3 / 2;
                 Hstep = 1;
+                System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
             return false;
         }
 
-        private bool MoveUbeganie() // убегание
+        private bool MoveUbeganie() // убегание СДЕЛАТЬ ПРАВИЛЬНО!!!!!!!!!!!!!!!
         {
+            if (WhoEat.Count > 0)
+            {
+                angle_rad = Math.Atan2(center.Y - WhoEat.ElementAt(0).GetCenter().Y, WhoEat.ElementAt(0).GetCenter().X - center.X)-Math.PI; // движение в сторону цели
+                Hstep = 5;
+                System.Diagnostics.Debug.WriteLine("Убэгаiм");
+                System.Diagnostics.Debug.WriteLine(angle_rad);
+                return true;
+            }
             return false;
         }
 
-        private bool MovePogonia() // погоня НАДА ПОЧИНИТЬ!!!!!!!!!!
+        private bool MovePogonia() // погоня
         {
             if (target != null)
             {
-                angle_rad = Math.Atan2(target.center.Y - center.Y, target.center.X - center.X); // движение в сторону цели
+                angle_rad = Math.Atan2(center.Y - target.GetCenter().Y, target.GetCenter().X - center.X); // движение в сторону цели
                 Hstep = 5;
-                Console.WriteLine("Поiхали");
+                System.Diagnostics.Debug.WriteLine("Поiхали");
+                System.Diagnostics.Debug.WriteLine(angle_rad);
                 return true;
             }
             

@@ -14,6 +14,7 @@ namespace Diplom111
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("11111111111111111111111111111111");
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
