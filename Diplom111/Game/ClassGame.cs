@@ -70,9 +70,17 @@ namespace Diplom111.Game
                 //Player.DrawObject(g);//отрисовка игрока
                 for (int i = 0; i < np; i++)
                 {
-                  //  NPC.ElementAt(i).Vidno_ne(NPC);//проверка видно объекту другой объект или нет
-                    NPC.ElementAt(i).MoveObject(MousePosition, p.Size, NPC);//движение нпс
-                    NPC.ElementAt(i).DrawObject(g);//отрисовка нпс
+                    try // исключ, если нпс = null
+                    {
+                        //  NPC.ElementAt(i).Vidno_ne(NPC);//проверка видно объекту другой объект или нет
+                        NPC.ElementAt(i).MoveObject(MousePosition, p.Size, NPC);//движение нпс
+                        NPC.ElementAt(i).DrawObject(g);//отрисовка нпс
+                    }
+                    catch(NullReferenceException excep)
+                    {
+                        continue;
+                    }
+                    
                 }             
                 Thread.Sleep(100);//скорость игры
             }

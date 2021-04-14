@@ -27,8 +27,9 @@ namespace Diplom111.Game
         public override void MoveObject(Point MousePosition, Size sizepanel, LinkedList<GameObjects>List1)
         {
 
-            Vidno_ne(List1);
-            KudaMove(sizepanel);
+            Vidno_ne(List1); //
+            KudaMove(sizepanel); //
+            KillObj(List1); //вызов съедания
 
             //if (0 > center.Y && 0 > center.X)
             //{
@@ -60,15 +61,23 @@ namespace Diplom111.Game
 
         public bool YouCanSeeMe(GameObjects npc)//проверка видит конкретный нпс,  кого-то или нет
         {
-            double d = Math.Sqrt(Math.Pow(npc.GetCenter().X - center.X, 2) + Math.Pow(npc.GetCenter().Y - center.Y, 2)); ;//расчёт расстояние между окружностями(объект и обзор) 
-            if (d<=(npc.GetRadius() + radobz))//пересечение объекта и обзора
+            try // исключение, если нпс = null
             {
-                //double angle = Math.Atan2(npc.center.Y - center.Y, npc.center.X - center.X);//попадает ли объект в сектор
-                //angle = (angle * 180) / Math.PI;//перевод в градусы
-                //Console.WriteLine(angle);
-                System.Diagnostics.Debug.WriteLine("нпс видит");
-                return true;
+                double d = Math.Sqrt(Math.Pow(npc.GetCenter().X - center.X, 2) + Math.Pow(npc.GetCenter().Y - center.Y, 2)); ;//расчёт расстояние между окружностями(объект и обзор) 
+                if (d <= (npc.GetRadius() + radobz))//пересечение объекта и обзора
+                {
+                    //double angle = Math.Atan2(npc.center.Y - center.Y, npc.center.X - center.X);//попадает ли объект в сектор
+                    //angle = (angle * 180) / Math.PI;//перевод в градусы
+                    //Console.WriteLine(angle);
+                    System.Diagnostics.Debug.WriteLine("нпс видит");
+                    return true;
+                }
             }
+            catch(NullReferenceException exep)
+            {
+
+            }
+
             return false;
         }
 
@@ -239,6 +248,25 @@ namespace Diplom111.Game
                 int angle_deg = rnd.Next(0, 360); //определение направление движения npc
                 angle_rad = (angle_deg * Math.PI) / 180;
                 Hstep = rnd.Next(5, 20); //определение кол-ва шагов
+            }
+        }
+
+        private void KillObj(LinkedList<GameObjects> List1) //съедание
+        {
+            if (target != null) 
+            {
+                double dist = Math.Sqrt(Math.Pow(center.X - target.GetCenter().X, 2) + Math.Pow(center.Y - target.GetCenter().Y, 2));
+                if(dist < radius)
+                {
+                    for (int i = 0; i < List1.Count; i++)
+                    {
+                        if (List1.ElementAt(i) == target)
+                        {
+                            List1.Find(target).Value = null;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
