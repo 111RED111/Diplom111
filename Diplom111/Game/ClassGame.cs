@@ -16,31 +16,38 @@ namespace Diplom111.Game
         Point MousePosition;
         //Graphics g;
         Panel p;
-        LinkedList<GameObjects> NPC; //лист с npc объектами
-        //LinkedList<NPCObjects> NPC;
-        int np = 2; //кол-во нпс
+        LinkedList<GameObjects> NPCList; //лист с NPCList объектами
+        //LinkedList<NPCListObjects> NPCList;
+        int np = 3; //кол-во нпс
+        int food; //кол-во еды
 
 
         //public ClassGame(Graphics g)
         //{
         //    this.g = g;
         //    Player = new PlayerObject(g);
-        //    NPC = new LinkedList<GameObjects>();
+        //    NPCList = new LinkedList<GameObjects>();
         //    for (int i=0; i<10; i++)
         //    {
-        //        NPC.AddLast(new NPCObjects(g));
+        //        NPCList.AddLast(new NPCListObjects(g));
         //    }
         //}
 
         public ClassGame(Panel p)
         {
+            food = np * 2; //кол-во еды
             this.p = p;//объект, который создаём запоминает p
-        //    Player = new PlayerObject(p.Size);//создание игрока
-            NPC = new LinkedList<GameObjects>();//список под нпс
-            //NPC = new LinkedList<NPCObjects>();
+        //  Player = new PlayerObject(p.Size);//создание игрока
+            NPCList = new LinkedList<GameObjects>();//список под нпс
+            //NPCList = new LinkedList<NPCListObjects>();
             for (int i = 0; i < np; i++)
             {
-                NPC.AddLast(new NPCObjects(p.Size));//создание нпс
+                NPCList.AddLast(new NPCListObjects(p.Size));//создание нпс
+            }
+
+            for (int i = 0; i < food; i++)
+            {
+                NPCList.AddLast(new Food(p.Size));//создание нпс
             }
         }
 
@@ -68,43 +75,59 @@ namespace Diplom111.Game
                 g.Clear(Color.White);//обновление панели
                 //Player.MoveObject(MousePosition, p.Size);//движение игрока
                 //Player.DrawObject(g);//отрисовка игрока
-                for (int i = 0; i < np; i++)
+                for (int i = 0; i < NPCList.Count; i++)
                 {
-                    try // исключ, если нпс = null
+                    if (NPCList.ElementAt(i) != null) // исключ, если нпс = null
                     {
-                        //  NPC.ElementAt(i).Vidno_ne(NPC);//проверка видно объекту другой объект или нет
-                        NPC.ElementAt(i).MoveObject(MousePosition, p.Size, NPC);//движение нпс
-                        NPC.ElementAt(i).DrawObject(g);//отрисовка нпс
-                    }
-                    catch(NullReferenceException excep)
-                    {
-                        continue;
-                    }
-                    
+                        //  NPCList.ElementAt(i).Vidno_ne(NPCList);//проверка видно объекту другой объект или нет
+                        NPCList.ElementAt(i).MoveObject(MousePosition, p.Size, NPCList);//движение нпс
+                        NPCList.ElementAt(i).DrawObject(g);//отрисовка нпс
+                    }                  
                 }             
-                Thread.Sleep(100);//скорость игры
+                Thread.Sleep(60);//скорость игры
+                AddObj(); //вызов добавления 
             }
+        }
+
+        private bool PlayerInList() //проверка, есть ли игрок в списке
+        {
+            for (int i = 0; i < np; i++)
+            {
+                if (NPCList.ElementAt(i) == null) //проверка если нпс в списке нул
+                {
+                    continue;
+                }
+                if (NPCList.ElementAt(i) is PlayerObject) //проаерка типа(PlayerObject) элемента в списке
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         //Выбор объекта, которым будем управлять 
         public void CreatePlayer(Point MousePosition)
         {
-            if (Player == null) //проверка не выбран ли уже объект
+            if (PlayerInList()==false) //проверка не выбран ли уже объект
             {
                 //System.Diagnostics.Debug.WriteLine("mouse");
                 //System.Diagnostics.Debug.WriteLine(Convert.ToString(MousePosition.X));
                 //System.Diagnostics.Debug.WriteLine(Convert.ToString(MousePosition.Y));
 
                 double mindist = 10000; //мин расстояние
-                GameObjects podhodnpc = null;
+                GameObjects podhodNPCList = null;
                 for (int i = 0; i < np; i++)
                 {
-                    Point center = NPC.ElementAt(i).GetCenter(); //получение координта центра нпс
+                    if (NPCList.ElementAt(i) == null) //проверка если нпс в списке нул
+                    {
+                        continue;
+                    }
+                    Point center = NPCList.ElementAt(i).GetCenter(); //получение координта центра нпс
                     double dist = Math.Sqrt(Math.Pow(MousePosition.X - center.X, 2) + Math.Pow(MousePosition.Y - center.Y, 2)); //рассчтё расстояния от курсора до объектов
                     if (mindist > dist) //нахождение ближайшего нпс
                     {
                         mindist = dist;
-                        podhodnpc = NPC.ElementAt(i);
+                        podhodNPCList = NPCList.ElementAt(i);
                     }
                     
                     //System.Diagnostics.Debug.WriteLine("center");
@@ -115,11 +138,36 @@ namespace Diplom111.Game
 
                 }
 
-                Player = new PlayerObject(p.Size, podhodnpc);//создание игрока
-                NPC.Remove(podhodnpc); //удаление выбранного нпс
-                NPC.AddFirst(Player); //добавление игрока (подмена нпс на игрока)
+                Player = new PlayerObject(p.Size, podhodNPCList);//создание игрока
+                NPCList.Remove(podhodNPCList); //удаление выбранного нпс
+                NPCList.AddFirst(Player); //добавление игрока (подмена нпс на игрока)
+
             }
             
+        }
+
+        public PlayerObject GetPlayer() //получить игрока, для исп в другом месте
+        {
+            return Player;
+        }
+
+        private void AddObj() //добавление нового объекта, когда кого-то съедают
+        {
+            for (int i = 0; i < np; i++)
+            {
+                if (NPCList.ElementAt(i) == null) //проверка если нпс в списке нул(кого-то съели)
+                {
+                    NPCList.Find(null).Value = new NPCListObjects(p.Size); //создание нпс, вместо съеденных
+                }
+            }
+
+            for (int i = np; i < np+food; i++)
+            {
+                if (NPCList.ElementAt(i) == null) //проверка если еда в списке нул(кого-то съели)
+                {
+                    NPCList.Find(null).Value = new Food(p.Size); //создание еды, вместо съеденных
+                }
+            }
         }
     }
 }

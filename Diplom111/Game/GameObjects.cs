@@ -26,13 +26,13 @@ namespace Diplom111.Game
             center = new Point(rnd.Next(0, panel_size.Width), rnd.Next(0, panel_size.Height));//рандомное место респауна
             radius = rnd.Next(10,40);//размер
             step = 50 - radius;//скорость движения
-            color = new Color();//                       
+            color = Color.FromArgb(rnd.Next(0,255), rnd.Next(0, 255), rnd.Next(0, 255));
         }
 
         //Рисуем объект
         public virtual void DrawObject(Graphics g) 
         {
-            g.FillEllipse(new SolidBrush(Color.Red), center.X - radius, center.Y - radius, 2 * radius, 2 * radius);//рисуем объект            
+            g.FillEllipse(new SolidBrush(color), center.X - radius, center.Y - radius, 2 * radius, 2 * radius);//рисуем объект            
         }
 
         //Возвращает координаты объекта
@@ -79,5 +79,26 @@ namespace Diplom111.Game
         //    }
         //}
 
+        protected void KillObj(LinkedList<GameObjects> List1, GameObjects target) //съедание
+        {
+            if (target != null) //проверка, что кто-то выбран для съедания
+            {
+                if (radius > target.radius) //проерка кто больше
+                {
+                    double dist = Math.Sqrt(Math.Pow(center.X - target.GetCenter().X, 2) + Math.Pow(center.Y - target.GetCenter().Y, 2)); //момент съедания(центр круга еды в круге охотника)
+                    if (dist < radius) //проверка ^
+                    {
+                        for (int i = 0; i < List1.Count; i++) //удалить кого съели
+                        {
+                            if (List1.ElementAt(i) == target)
+                            {
+                                List1.Find(target).Value = null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
