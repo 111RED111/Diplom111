@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,28 @@ namespace Diplom111.Game
         //Параметры объектов
         protected GameObjects(Size panel_size) //panel_size - размер панели
         {
+
             center = new Point(rnd.Next(0, panel_size.Width), rnd.Next(0, panel_size.Height));//рандомное место респауна
-            radius = rnd.Next(10,40);//размер
-            step = 50 - radius;//скорость движения
-            color = Color.FromArgb(rnd.Next(0,255), rnd.Next(0, 255), rnd.Next(0, 255));
+
+            BitArray posledrad = Posled.GetPosled(8);
+            byte[] byterad = new byte[1]; // массив байт, для переделывания из массива битов в массив байтов 
+            posledrad.CopyTo(byterad, 0); // заполнение массива
+
+            radius = byterad[0]/4; //размер
+
+            if (radius < 10) //если размер из массива пришёл меньше 10, делать объект равным 10
+            {
+                radius = 10;
+            }
+
+            step = 80 - radius; //скорость движения
+
+            BitArray posledcolor = Posled.GetPosled(24); // часть последовательности под цвет
+
+            byte[] bytecolor = new byte[3]; // массив байт, для переделывания из массива битов в массив байтов 
+            posledcolor.CopyTo(bytecolor, 0); // заполнение массива
+
+            color = Color.FromArgb(bytecolor[0], bytecolor[1], bytecolor[2]); // цвет объектов
         }
 
         //Рисуем объект

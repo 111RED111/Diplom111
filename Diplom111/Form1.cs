@@ -21,7 +21,7 @@ namespace Diplom111
             {
                 InitializeComponent();
                 Record = new Recording();
-                Game = new ClassGame(panel1);
+               
             }
 
         //Начинаем запись
@@ -43,9 +43,10 @@ namespace Diplom111
             Convert1.ProcConvert();
         }
 
-        //Рисуем объект игрока
+        //Рисуем объекты
         private void button4_Click(object sender, EventArgs e)
         {
+            Game = new ClassGame(panel1);
             Game.StartGame();
             //g.FillEllipse(new SolidBrush(Color.Black), 100, 100, 10, 10);
         }
@@ -53,13 +54,19 @@ namespace Diplom111
         //Движение курсора по панели
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            Game.SetMousePosition(e.Location);
+            if (Game != null)
+            {
+                Game.SetMousePosition(e.Location);
+            }            
         }
 
         //выбор игрока
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            Game.CreatePlayer(e.Location);
+            if (Game != null)
+            {
+                Game.CreatePlayer(e.Location);
+            }                
         }
     }
 }

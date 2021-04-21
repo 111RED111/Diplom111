@@ -33,7 +33,7 @@ namespace Diplom111.Game
         //    }
         //}
 
-        public ClassGame(Panel p)
+        public ClassGame(Panel p) // констркутор игры 
         {
             food = np * 2; //кол-во еды
             this.p = p;//объект, который создаём запоминает p
