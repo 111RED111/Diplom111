@@ -21,6 +21,8 @@ namespace Diplom111.Game
         public NPCListObjects(Size panel_size) : base(panel_size)//size_p - длина панели
         {
             radobz = 5 * radius; //радиус обзора
+            key = new KeyNPC(ClassGame.GetDlinaKey()*10); // создали новый пустой ключ для нпс (нпс может хранить 10 ключей)
+            key.AddBitArray(StartPosled); // в ключ записали начальные параметры 
         }
 
         //Сдвигаем объект
@@ -67,7 +69,7 @@ namespace Diplom111.Game
                 //double angle = Math.Atan2(NPCList.center.Y - center.Y, NPCList.center.X - center.X);//попадает ли объект в сектор
                 //angle = (angle * 180) / Math.PI;//перевод в градусы
                 //Console.WriteLine(angle);
-                System.Diagnostics.Debug.WriteLine("нпс видит");
+                ///System.Diagnostics.Debug.WriteLine("нпс видит");
                 return true;
             }
             return false;
@@ -119,11 +121,11 @@ namespace Diplom111.Game
         {
             double bolshe = (double) NPCList_obj.GetRadius() / this.radius;//радиус объекта, который видно делится с текущим
             //if (bolshe > 1.15)//есть можно, если на 15% меньше
-            System.Diagnostics.Debug.WriteLine("ubegat");
-            System.Diagnostics.Debug.WriteLine(Convert.ToString(bolshe));
+            ///System.Diagnostics.Debug.WriteLine("ubegat");
+            ///System.Diagnostics.Debug.WriteLine(Convert.ToString(bolshe));
             if (bolshe > 1.01)//есть можно, если на 1% меньше
             {
-                System.Diagnostics.Debug.WriteLine("убегать");
+                ///System.Diagnostics.Debug.WriteLine("убегать");
                 return true;
             }
             else
@@ -136,11 +138,11 @@ namespace Diplom111.Game
         {
             double bolshe = (double) this.radius / NPCList_obj.GetRadius();//радиус текущего объекта, делится с который видно
             //if (bolshe > 1.15)//есть можно, если на 15% меньше
-            System.Diagnostics.Debug.WriteLine("Estb");
-            System.Diagnostics.Debug.WriteLine(Convert.ToString(bolshe));
+            ///System.Diagnostics.Debug.WriteLine("Estb");
+            ///System.Diagnostics.Debug.WriteLine(Convert.ToString(bolshe));
             if (bolshe > 1.01)//есть можно, если на 1% меньше
             {
-                System.Diagnostics.Debug.WriteLine("можно есть");
+               /// System.Diagnostics.Debug.WriteLine("можно есть");
                 return true;
             }
             else
@@ -174,7 +176,7 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.PI;
                 Hstep = 1;
-                System.Diagnostics.Debug.WriteLine("выбрал другое");
+                ///System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
 
@@ -182,7 +184,7 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.PI / 2;
                 Hstep = 1;
-                System.Diagnostics.Debug.WriteLine("выбрал другое");
+                ///System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
 
@@ -196,7 +198,7 @@ namespace Diplom111.Game
             {
                 angle_rad = 0;
                 Hstep = 1;
-                System.Diagnostics.Debug.WriteLine("выбрал другое");
+                ///System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
 
@@ -204,7 +206,7 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.PI * 3 / 2;
                 Hstep = 1;
-                System.Diagnostics.Debug.WriteLine("выбрал другое");
+                ///System.Diagnostics.Debug.WriteLine("выбрал другое");
                 return true;
             }
             return false;
@@ -216,8 +218,8 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.Atan2(center.Y - WhoEat.ElementAt(0).GetCenter().Y, WhoEat.ElementAt(0).GetCenter().X - center.X)-Math.PI; // движение в сторону цели
                 Hstep = 5;
-                System.Diagnostics.Debug.WriteLine("Убэгаiм");
-                System.Diagnostics.Debug.WriteLine(angle_rad);
+                ///System.Diagnostics.Debug.WriteLine("Убэгаiм");
+                ///System.Diagnostics.Debug.WriteLine(angle_rad);
                 return true;
             }
             return false;
@@ -229,8 +231,8 @@ namespace Diplom111.Game
             {
                 angle_rad = Math.Atan2(center.Y - target.GetCenter().Y, target.GetCenter().X - center.X); // движение в сторону цели
                 Hstep = 5;
-                System.Diagnostics.Debug.WriteLine("Поiхали");
-                System.Diagnostics.Debug.WriteLine(angle_rad);
+                ///System.Diagnostics.Debug.WriteLine("Поiхали");
+                ///System.Diagnostics.Debug.WriteLine(angle_rad);
                 return true;
             }
             

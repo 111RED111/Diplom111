@@ -17,7 +17,7 @@ namespace Diplom111
 
         public abstract void AddBitArray(BitArray addkey); // метод добавления битов в ключ
 
-        public BitArray GetKey() // возвращаем ключ 
+        public BitArray GetKeyArray() // возвращаем собранную последовательность
         {
             BitArray FillArray = new BitArray(index); // заполняем массив "FillArray" массивом "key", что бы не было незаполненных значений
             

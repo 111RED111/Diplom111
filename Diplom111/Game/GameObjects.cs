@@ -16,10 +16,11 @@ namespace Diplom111.Game
         protected Point center; //центр шара 
         protected int radius; //размер шара
         protected Color color; //цвет шара
-        static protected Random rnd = new Random(); //рандом, для характеристик
+        static protected Random rnd = new Random(); //рандом, для характеристик ЕСЛИ ЧТО МОЖНО ЗАМЕНИТЬ РАНДОМ НА ЗВУК!!!!!!!!!!!!
         protected int step; //шаг шара
 
-        
+        protected Key key; // послеодовательность объекта
+        protected BitArray StartPosled; // стартовая последовательность, из которой берём параметры
 
         //Параметры объектов
         protected GameObjects(Size panel_size) //panel_size - размер панели
@@ -27,11 +28,11 @@ namespace Diplom111.Game
 
             center = new Point(rnd.Next(0, panel_size.Width), rnd.Next(0, panel_size.Height));//рандомное место респауна
 
-            BitArray posledrad = Posled.GetPosled(8);
-            byte[] byterad = new byte[1]; // массив байт, для переделывания из массива битов в массив байтов 
-            posledrad.CopyTo(byterad, 0); // заполнение массива
+            StartPosled = Posled.GetPosled(32); // зарезервировали место под все параметры (цвет, размер)
+            byte[] byteparam = new byte[4]; // массив байт, для переделывания из массива битов в массив байтов, для всех параметров
+            StartPosled.CopyTo(byteparam, 0); // заполнение массива
 
-            radius = byterad[0]/4; //размер
+            radius = byteparam[0]/4; //размер
 
             if (radius < 10) //если размер из массива пришёл меньше 10, делать объект равным 10
             {
@@ -39,13 +40,8 @@ namespace Diplom111.Game
             }
 
             step = 80 - radius; //скорость движения
-
-            BitArray posledcolor = Posled.GetPosled(24); // часть последовательности под цвет
-
-            byte[] bytecolor = new byte[3]; // массив байт, для переделывания из массива битов в массив байтов 
-            posledcolor.CopyTo(bytecolor, 0); // заполнение массива
-
-            color = Color.FromArgb(bytecolor[0], bytecolor[1], bytecolor[2]); // цвет объектов
+                        
+            color = Color.FromArgb(byteparam[1], byteparam[2], byteparam[3]); // цвет объектов
         }
 
         //Рисуем объект
@@ -111,13 +107,19 @@ namespace Diplom111.Game
                         {
                             if (List1.ElementAt(i) == target)
                             {
-                                List1.Find(target).Value = null;
+                                List1.Find(target).Value = null; // удалить из списка, кого съели
+                                key.AddBitArray(target.GetKey().GetKeyArray()); // тот, кто съедает кого-то получает его последовательность
                                 break;
                             }
                         }
                     }
                 }
             }
+        }
+
+        public Key GetKey() // получить ключ
+        {
+            return key;
         }
     }
 }

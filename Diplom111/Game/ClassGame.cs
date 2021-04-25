@@ -12,15 +12,21 @@ namespace Diplom111.Game
     //Создание игры
     class ClassGame
     {
-        PlayerObject Player;
-        Point MousePosition;
+        private PlayerObject Player;
+        private Point MousePosition;
         //Graphics g;
-        Panel p;
-        LinkedList<GameObjects> NPCList; //лист с NPCList объектами
+        private Panel p;
+        private LinkedList<GameObjects> NPCList; //лист с NPCList объектами
         //LinkedList<NPCListObjects> NPCList;
-        int np = 3; //кол-во нпс
-        int food; //кол-во еды
+        private int np = 3; //кол-во нпс
+        private int food; //кол-во еды
 
+        private Thread GameThread; // игровой поток
+        private bool StopGame; // игра остановлена? 
+
+        private static int DlinaKey;
+        
+       
 
         //public ClassGame(Graphics g)
         //{
@@ -33,10 +39,11 @@ namespace Diplom111.Game
         //    }
         //}
 
-        public ClassGame(Panel p) // констркутор игры 
+        public ClassGame(Panel p, int DlinaKey) // констркутор игры 
         {
             food = np * 2; //кол-во еды
             this.p = p;//объект, который создаём запоминает p
+            ClassGame.DlinaKey = DlinaKey; // сохраняем длину ключа в ClassGame
         //  Player = new PlayerObject(p.Size);//создание игрока
             NPCList = new LinkedList<GameObjects>();//список под нпс
             //NPCList = new LinkedList<NPCListObjects>();
@@ -54,9 +61,10 @@ namespace Diplom111.Game
         //Начало игры (отрисовка объекта игрока, запуск потока)
         public void StartGame()
         {
-            Thread InstanceCaller = new Thread(new ThreadStart(ThreadMove));
+            StopGame = false;
+            GameThread = new Thread(new ThreadStart(ThreadMove));
             // Start the thread.
-            InstanceCaller.Start();
+            GameThread.Start();
         }
 
         //Определение позиции курсора
@@ -69,7 +77,7 @@ namespace Diplom111.Game
         //Сдвиг объектов(поток)
         private void ThreadMove()
         {
-            while (true)
+            while (StopGame == false)
             {
                 Graphics g = p.CreateGraphics();//переменная, через которую рисуем
                 g.Clear(Color.White);//обновление панели
@@ -168,6 +176,16 @@ namespace Diplom111.Game
                     NPCList.Find(null).Value = new Food(p.Size); //создание еды, вместо съеденных
                 }
             }
+        }
+
+        public void Stop() // завершение игры !!!!!!добавить кнопку!!!!!!!!!
+        {
+            StopGame = true;
+        }
+
+        public static int GetDlinaKey() // возвращаем длину ключа
+        {
+            return DlinaKey;
         }
     }
 }

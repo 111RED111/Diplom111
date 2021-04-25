@@ -19,5 +19,10 @@ namespace Diplom111
         {
             general_pool.AddLast(key); // добавление ключа в пул
         }
+
+        public static void ClearPool() // очищение пула
+        {
+            general_pool = new LinkedList<BitArray>(); // создание пустого пула
+        }
     }
 }

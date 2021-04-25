@@ -12,19 +12,19 @@ namespace Diplom111.Game
     //Объект игрока
     class PlayerObject:GameObjects
     {
-
         public PlayerObject(Size panel_size) : base(panel_size) //выбор рандомного обзекта(не используется)
         {
 
         }
 
-        public PlayerObject(Size panel_size, GameObjects NPCListobject) : base(panel_size) //берём у нпс все параметры
+        public PlayerObject(Size panel_size, GameObjects NPC) : base(panel_size) //берём у нпс все параметры
         {
-            this.center = NPCListobject.GetCenter();
-            this.radius = NPCListobject.GetRadius();
-            this.color = NPCListobject.GetColor();
-            this.step = NPCListobject.GetStep();
-
+            this.center = NPC.GetCenter();
+            this.radius = NPC.GetRadius();
+            this.color = NPC.GetColor();
+            this.step = NPC.GetStep();
+            key = new KeyPlayer(ClassGame.GetDlinaKey()); // создали новый пустой ключ для игрока 256 переделать на значения комбобокса!!!!!!!!!!!!!!!!!!
+            key.AddBitArray(NPC.GetKey().GetKeyArray()); // ключь нпс переделываем в ключ игрока
         }
 
         //Сдвигаем объект
@@ -60,5 +60,6 @@ namespace Diplom111.Game
                 }
             }
         }
+
     }
 }

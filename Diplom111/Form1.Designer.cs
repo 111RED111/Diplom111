@@ -30,65 +30,69 @@ namespace Diplom111
         private void InitializeComponent()
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.StartRecord = new System.Windows.Forms.Button();
+            this.StopRecord = new System.Windows.Forms.Button();
+            this.Convert = new System.Windows.Forms.Button();
+            this.StartGame = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.StopGame = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "64",
             "128",
             "256"});
-            this.comboBox1.Location = new System.Drawing.Point(914, 55);
+            this.comboBox1.Location = new System.Drawing.Point(1172, 55);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(151, 28);
             this.comboBox1.TabIndex = 0;
             // 
-            // button1
+            // StartRecord
             // 
-            this.button1.Location = new System.Drawing.Point(34, 34);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(139, 61);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Старт";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.StartRecord.Location = new System.Drawing.Point(34, 34);
+            this.StartRecord.Name = "StartRecord";
+            this.StartRecord.Size = new System.Drawing.Size(139, 61);
+            this.StartRecord.TabIndex = 1;
+            this.StartRecord.Text = "Начать запись";
+            this.StartRecord.UseVisualStyleBackColor = true;
+            this.StartRecord.Click += new System.EventHandler(this.StartRecord_Click);
             // 
-            // button2
+            // StopRecord
             // 
-            this.button2.Location = new System.Drawing.Point(205, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(139, 61);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Стоп";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.StopRecord.Enabled = false;
+            this.StopRecord.Location = new System.Drawing.Point(205, 34);
+            this.StopRecord.Name = "StopRecord";
+            this.StopRecord.Size = new System.Drawing.Size(139, 61);
+            this.StopRecord.TabIndex = 2;
+            this.StopRecord.Text = "Остановить запись";
+            this.StopRecord.UseVisualStyleBackColor = true;
+            this.StopRecord.Click += new System.EventHandler(this.StopRecord_Click);
             // 
-            // button3
+            // Convert
             // 
-            this.button3.Location = new System.Drawing.Point(557, 34);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(139, 61);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Конвертировать";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.Convert.Location = new System.Drawing.Point(557, 34);
+            this.Convert.Name = "Convert";
+            this.Convert.Size = new System.Drawing.Size(139, 61);
+            this.Convert.TabIndex = 3;
+            this.Convert.Text = "Конвертировать";
+            this.Convert.UseVisualStyleBackColor = true;
+            this.Convert.Click += new System.EventHandler(this.Convert_Click);
             // 
-            // button4
+            // StartGame
             // 
-            this.button4.Location = new System.Drawing.Point(382, 34);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(139, 61);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Нарисовать";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.StartGame.Enabled = false;
+            this.StartGame.Location = new System.Drawing.Point(382, 34);
+            this.StartGame.Name = "StartGame";
+            this.StartGame.Size = new System.Drawing.Size(139, 61);
+            this.StartGame.TabIndex = 4;
+            this.StartGame.Text = "Запуск игры";
+            this.StartGame.UseVisualStyleBackColor = true;
+            this.StartGame.Click += new System.EventHandler(this.StartGame_Click);
             // 
             // panel1
             // 
@@ -98,34 +102,48 @@ namespace Diplom111
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(12, 129);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1238, 599);
+            this.panel1.Size = new System.Drawing.Size(1496, 684);
             this.panel1.TabIndex = 5;
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(890, 32);
+            this.label1.Location = new System.Drawing.Point(1148, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(201, 20);
             this.label1.TabIndex = 6;
             this.label1.Text = "Длина последовательности";
             // 
+            // StopGame
+            // 
+            this.StopGame.Enabled = false;
+            this.StopGame.Location = new System.Drawing.Point(727, 34);
+            this.StopGame.Name = "StopGame";
+            this.StopGame.Size = new System.Drawing.Size(133, 61);
+            this.StopGame.TabIndex = 7;
+            this.StopGame.Text = "Конец игры";
+            this.StopGame.UseVisualStyleBackColor = true;
+            this.StopGame.Click += new System.EventHandler(this.StopGame_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 740);
+            this.ClientSize = new System.Drawing.Size(1520, 825);
+            this.Controls.Add(this.StopGame);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.StopRecord);
+            this.Controls.Add(this.Convert);
+            this.Controls.Add(this.StartRecord);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.StartGame);
             this.Controls.Add(this.comboBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,12 +152,13 @@ namespace Diplom111
         #endregion
 
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button StartRecord;
+        private System.Windows.Forms.Button StopRecord;
+        private System.Windows.Forms.Button Convert;
+        private System.Windows.Forms.Button StartGame;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button StopGame;
     }
 }
 

@@ -14,41 +14,55 @@ namespace Diplom111
     public partial class Form1 : Form
     {
 
-            ClassGame Game;
-            Recording Record;
+        ClassGame Game;
+        Recording Record;
 
-            public Form1()
-            {
-                InitializeComponent();
-                Record = new Recording();
-               
-            }
+        public Form1()
+        {
+            InitializeComponent();
+            Record = new Recording();
+            //comboBox1.SelectedItem = "64";
+            comboBox1.SelectedIndex = 0;
+        }
 
         //Начинаем запись
-        private void button1_Click(object sender, EventArgs e)
+        private void StartRecord_Click(object sender, EventArgs e)
         {
             Record.StartRecord();
+            StopRecord.Enabled = true; // включение второй кнопки при нажатии первой
+            StartRecord.Enabled = false; // выключ первой кнопки 
         }
 
         //Прерываем запись и конвертирование в цифры
-        private void button2_Click(object sender, EventArgs e)
+        private void StopRecord_Click(object sender, EventArgs e)
         {
             Record.StopRecord();
             Convert1.ProcConvert();
+            StopRecord.Enabled = false;
+            StartRecord.Enabled = true;
+            Convert.Enabled = true;
         }
 
         //Конвертирование аудио в цифры
-        private void button3_Click(object sender, EventArgs e)
+        private void Convert_Click(object sender, EventArgs e)
         {
             Convert1.ProcConvert();
+            StartGame.Enabled = true;
+            Convert.Enabled = false;
         }
 
         //Рисуем объекты
-        private void button4_Click(object sender, EventArgs e)
+        private void StartGame_Click(object sender, EventArgs e)
         {
-            Game = new ClassGame(panel1);
+            Pool.ClearPool(); // очищение пула
+            int DlinaKey = int.Parse(comboBox1.Text); // достаём длину ключа
+            Game = new ClassGame(panel1, DlinaKey);
             Game.StartGame();
             //g.FillEllipse(new SolidBrush(Color.Black), 100, 100, 10, 10);
+            Convert.Enabled = false;
+            StartGame.Enabled = false;
+            StopGame.Enabled = true;
+            
         }
 
         //Движение курсора по панели
@@ -68,5 +82,30 @@ namespace Diplom111
                 Game.CreatePlayer(e.Location);
             }                
         }
+
+        // закрытие формы
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Game != null)
+            {
+                Game.Stop();
+            }
+        }
+
+        // остановка игры по кнопке
+        private void StopGame_Click(object sender, EventArgs e)
+        {
+            if (Game != null)
+            {
+                Game.Stop();
+            }
+            Graphics g = panel1.CreateGraphics();//переменная, через которую рисуем
+            g.Clear(Color.White);//обновление панели
+            Convert.Enabled = true;
+            StartGame.Enabled = true;
+            StopGame.Enabled = false;
+        }
+
+
     }
 }
