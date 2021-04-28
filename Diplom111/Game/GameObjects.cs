@@ -32,7 +32,7 @@ namespace Diplom111.Game
             byte[] byteparam = new byte[4]; // массив байт, для переделывания из массива битов в массив байтов, для всех параметров
             StartPosled.CopyTo(byteparam, 0); // заполнение массива
 
-            radius = byteparam[0]/4; //размер
+            radius = byteparam[0]/4; //размер 10-64 пикселей
 
             if (radius < 10) //если размер из массива пришёл меньше 10, делать объект равным 10
             {
@@ -109,6 +109,7 @@ namespace Diplom111.Game
                             {
                                 List1.Find(target).Value = null; // удалить из списка, кого съели
                                 key.AddBitArray(target.GetKey().GetKeyArray()); // тот, кто съедает кого-то получает его последовательность
+                                IncRad(target); // вызов увеличения
                                 break;
                             }
                         }
@@ -120,6 +121,17 @@ namespace Diplom111.Game
         public Key GetKey() // получить ключ
         {
             return key;
+        }
+
+        public virtual void IncRad(GameObjects target) //увеличение размеров объекта и скорости
+        {
+            radius = radius + (target.radius) / 5; //увеличение радиуса на (радиус цели / 5 )
+            if (radius > 64) //радиус не может быть больше 64
+            {
+                radius = 64;
+            }
+            step = 80 - radius;
+            
         }
     }
 }

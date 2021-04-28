@@ -18,7 +18,7 @@ namespace Diplom111.Game
         private Panel p;
         private LinkedList<GameObjects> NPCList; //лист с NPCList объектами
         //LinkedList<NPCListObjects> NPCList;
-        private int np = 3; //кол-во нпс
+        private int np = 5; //кол-во нпс
         private int food; //кол-во еды
 
         private Thread GameThread; // игровой поток

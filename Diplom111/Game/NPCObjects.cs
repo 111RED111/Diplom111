@@ -30,7 +30,7 @@ namespace Diplom111.Game
         {
 
             Vidno_ne(List1); //
-            KudaMove(sizepanel); //
+            int kod = KudaMove(sizepanel); // kod, что делает объект 1,2,3,4
             KillObj(List1, target); //вызов съедания
 
             //if (0 > center.Y && 0 > center.X)
@@ -38,12 +38,32 @@ namespace Diplom111.Game
              //   angle_rad = Math.PI * 3 / 2;
              //   Hstep = 1;
             //}
-            
-            Hstep--; //шаги
-            double stepx = Math.Cos(angle_rad) * step;  //свдиг по X и Y
-            double stepy = Math.Sin(angle_rad) * step;
-            center.X = (int)(center.X + stepx); //прибавление сдвига к координатам
-            center.Y = (int)(center.Y - stepy);
+
+            if (kod == 3) // если при погоне, расстояние меньше шага, идёт проверка
+            {
+                double targdist = Math.Sqrt(Math.Pow(target.GetCenter().X - center.X, 2) + Math.Pow(target.GetCenter().Y - center.Y, 2)); //targdist дистанция до цели
+                if (targdist < step)
+                {
+                    center.X = target.GetCenter().X;
+                    center.Y = target.GetCenter().Y;
+                }
+                else
+                {
+                    Hstep--; //шаги
+                    double stepx = Math.Cos(angle_rad) * step;  //свдиг по X и Y
+                    double stepy = Math.Sin(angle_rad) * step;
+                    center.X = (int)(center.X + stepx); //прибавление сдвига к координатам
+                    center.Y = (int)(center.Y - stepy);
+                }
+            }
+            else
+            {
+                Hstep--; //шаги
+                double stepx = Math.Cos(angle_rad) * step;  //свдиг по X и Y
+                double stepy = Math.Sin(angle_rad) * step;
+                center.X = (int)(center.X + stepx); //прибавление сдвига к координатам
+                center.Y = (int)(center.Y - stepy);
+            }            
         }
 
         public override void DrawObject(Graphics g)
@@ -63,7 +83,7 @@ namespace Diplom111.Game
 
         public bool YouCanSeeMe(GameObjects NPCList)//проверка видит конкретный нпс,  кого-то или нет
         {
-            double d = Math.Sqrt(Math.Pow(NPCList.GetCenter().X - center.X, 2) + Math.Pow(NPCList.GetCenter().Y - center.Y, 2)); ;//расчёт расстояние между окружностями(объект и обзор) 
+            double d = Math.Sqrt(Math.Pow(NPCList.GetCenter().X - center.X, 2) + Math.Pow(NPCList.GetCenter().Y - center.Y, 2)); //расчёт расстояние между окружностями(объект и обзор) 
             if (d <= (NPCList.GetRadius() + radobz))//пересечение объекта и обзора
             {
                 //double angle = Math.Atan2(NPCList.center.Y - center.Y, NPCList.center.X - center.X);//попадает ли объект в сектор
@@ -151,7 +171,7 @@ namespace Diplom111.Game
             }
         }
 
-        private void KudaMove(Size sizepanel) //куда двигается (направление движения) 
+        private int KudaMove(Size sizepanel) //куда двигается (направление движения) 
             // 1)контроль границ, 2)убегание, 3)погоня, 4)рандомное движение
         {
             bool granb = MoveGranici(sizepanel); // контроль границ
@@ -164,10 +184,13 @@ namespace Diplom111.Game
                     if (hunt == false)
                     {
                         MoveRand(); // рандомное движение
+                        return 4; // рандомное движение
                     }
+                    return 3; // погоня
                 }
+                return 2; // убегание
             }
-
+            return 1; // контроль границ
         }
 
         private bool MoveGranici(Size sizepanel) // контроль границ
@@ -249,7 +272,11 @@ namespace Diplom111.Game
             }
         }
 
-        
+        public override void IncRad(GameObjects target) // увеличение радиуса обзора 
+        {
+            base.IncRad(target);
+            radobz = 5 * radius;
+        }
 
     }
 }
