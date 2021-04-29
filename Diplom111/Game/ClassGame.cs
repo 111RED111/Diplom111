@@ -24,9 +24,9 @@ namespace Diplom111.Game
         private Thread GameThread; // игровой поток
         private bool StopGame; // игра остановлена? 
 
-        private static int DlinaKey;
-        
-       
+        private static int DlinaKey; 
+        public static int NujKey;
+
 
         //public ClassGame(Graphics g)
         //{
@@ -39,12 +39,13 @@ namespace Diplom111.Game
         //    }
         //}
 
-        public ClassGame(Panel p, int DlinaKey) // констркутор игры 
+        public ClassGame(Panel p, int DlinaKey, int NujKey) // констркутор игры 
         {
             food = np * 2; //кол-во еды
             this.p = p;//объект, который создаём запоминает p
             ClassGame.DlinaKey = DlinaKey; // сохраняем длину ключа в ClassGame
-        //  Player = new PlayerObject(p.Size);//создание игрока
+            ClassGame.NujKey = NujKey; // сохраняем кол-во ключей в ClassGame
+            //  Player = new PlayerObject(p.Size);//создание игрока
             NPCList = new LinkedList<GameObjects>();//список под нпс
             //NPCList = new LinkedList<NPCListObjects>();
             for (int i = 0; i < np; i++)
@@ -94,6 +95,11 @@ namespace Diplom111.Game
                 }             
                 Thread.Sleep(60);//скорость игры
                 AddObj(); //вызов добавления 
+
+                if (Pool.GetKolKey() >= Math.Min(NujKey, 2000)) // выход по достиижению нужного кол-ва ключей (либо 2000, либо что указано в текстбоксе)
+                {
+                    StopGame = true;
+                }
             }
         }
 
@@ -178,7 +184,7 @@ namespace Diplom111.Game
             }
         }
 
-        public void Stop() // завершение игры !!!!!!добавить кнопку!!!!!!!!!
+        public void Stop() // завершение игры
         {
             StopGame = true;
         }

@@ -37,6 +37,9 @@ namespace Diplom111
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.StopGame = new System.Windows.Forms.Button();
+            this.KolKey = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.NujnoKey = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -47,14 +50,14 @@ namespace Diplom111
             "64",
             "128",
             "256"});
-            this.comboBox1.Location = new System.Drawing.Point(1172, 55);
+            this.comboBox1.Location = new System.Drawing.Point(1292, 32);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(151, 28);
             this.comboBox1.TabIndex = 0;
             // 
             // StartRecord
             // 
-            this.StartRecord.Location = new System.Drawing.Point(34, 34);
+            this.StartRecord.Location = new System.Drawing.Point(34, 42);
             this.StartRecord.Name = "StartRecord";
             this.StartRecord.Size = new System.Drawing.Size(139, 61);
             this.StartRecord.TabIndex = 1;
@@ -65,7 +68,7 @@ namespace Diplom111
             // StopRecord
             // 
             this.StopRecord.Enabled = false;
-            this.StopRecord.Location = new System.Drawing.Point(205, 34);
+            this.StopRecord.Location = new System.Drawing.Point(205, 41);
             this.StopRecord.Name = "StopRecord";
             this.StopRecord.Size = new System.Drawing.Size(139, 61);
             this.StopRecord.TabIndex = 2;
@@ -75,7 +78,7 @@ namespace Diplom111
             // 
             // Convert
             // 
-            this.Convert.Location = new System.Drawing.Point(557, 34);
+            this.Convert.Location = new System.Drawing.Point(557, 42);
             this.Convert.Name = "Convert";
             this.Convert.Size = new System.Drawing.Size(139, 61);
             this.Convert.TabIndex = 3;
@@ -86,7 +89,7 @@ namespace Diplom111
             // StartGame
             // 
             this.StartGame.Enabled = false;
-            this.StartGame.Location = new System.Drawing.Point(382, 34);
+            this.StartGame.Location = new System.Drawing.Point(382, 42);
             this.StartGame.Name = "StartGame";
             this.StartGame.Size = new System.Drawing.Size(139, 61);
             this.StartGame.TabIndex = 4;
@@ -100,9 +103,9 @@ namespace Diplom111
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(12, 129);
+            this.panel1.Location = new System.Drawing.Point(12, 143);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1496, 684);
+            this.panel1.Size = new System.Drawing.Size(1496, 670);
             this.panel1.TabIndex = 5;
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
@@ -111,7 +114,7 @@ namespace Diplom111
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1148, 32);
+            this.label1.Location = new System.Drawing.Point(1265, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(201, 20);
             this.label1.TabIndex = 6;
@@ -120,7 +123,7 @@ namespace Diplom111
             // StopGame
             // 
             this.StopGame.Enabled = false;
-            this.StopGame.Location = new System.Drawing.Point(727, 34);
+            this.StopGame.Location = new System.Drawing.Point(727, 42);
             this.StopGame.Name = "StopGame";
             this.StopGame.Size = new System.Drawing.Size(133, 61);
             this.StopGame.TabIndex = 7;
@@ -128,11 +131,40 @@ namespace Diplom111
             this.StopGame.UseVisualStyleBackColor = true;
             this.StopGame.Click += new System.EventHandler(this.StopGame_Click);
             // 
+            // KolKey
+            // 
+            this.KolKey.AutoSize = true;
+            this.KolKey.Location = new System.Drawing.Point(991, 58);
+            this.KolKey.Name = "KolKey";
+            this.KolKey.Size = new System.Drawing.Size(190, 20);
+            this.KolKey.TabIndex = 8;
+            this.KolKey.Text = "Ключей сгенерировано: 0";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(1310, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(112, 20);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Нужно ключей";
+            // 
+            // NujnoKey
+            // 
+            this.NujnoKey.Location = new System.Drawing.Point(1328, 96);
+            this.NujnoKey.Name = "NujnoKey";
+            this.NujnoKey.Size = new System.Drawing.Size(76, 27);
+            this.NujnoKey.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1520, 825);
+            this.Controls.Add(this.NujnoKey);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.KolKey);
             this.Controls.Add(this.StopGame);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.StopRecord);
@@ -142,7 +174,6 @@ namespace Diplom111
             this.Controls.Add(this.StartGame);
             this.Controls.Add(this.comboBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -159,6 +190,9 @@ namespace Diplom111
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button StopGame;
+        private System.Windows.Forms.Label KolKey;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox NujnoKey;
     }
 }
 

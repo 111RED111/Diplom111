@@ -26,6 +26,9 @@ namespace Diplom111
             Record = new Recording();
             //comboBox1.SelectedItem = "64";
             comboBox1.SelectedIndex = 0;
+
+            Pool.SetLabel(KolKey); // передача метки, что бы можно было записывать
+
         }
 
         //Начинаем запись
@@ -56,10 +59,11 @@ namespace Diplom111
 
         //Рисуем объекты
         private void StartGame_Click(object sender, EventArgs e)
-        {
+        {            
             Pool.ClearPool(); // очищение пула
-            int DlinaKey = int.Parse(comboBox1.Text); // достаём длину ключа
-            Game = new ClassGame(panel1, DlinaKey);
+            int DlinaKey = int.Parse(comboBox1.Text); // достаём длину ключа из комбобокса
+            int NujKey = int.Parse(NujnoKey.Text); // достаём сколько ключей нужно из текстбокса
+            Game = new ClassGame(panel1, DlinaKey, NujKey);            
             Game.StartGame();
             //g.FillEllipse(new SolidBrush(Color.Black), 100, 100, 10, 10);
             Convert.Enabled = false;
